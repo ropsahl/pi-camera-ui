@@ -1,6 +1,8 @@
 import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import {AppComponent} from './app.component';
 import {ConfigEditorComponent} from './config-editor/config-editor.component';
@@ -9,15 +11,18 @@ import {LY_THEME, LY_THEME_NAME, LyHammerGestureConfig, LyTheme2, StyleRenderer}
 import {MinimaLight} from '@alyle/ui/themes/minima';
 import {LyButtonModule} from '@alyle/ui/button';
 import {LySliderModule} from '@alyle/ui/slider';
+import { ImageComponent } from './image/image.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConfigEditorComponent
+    ConfigEditorComponent,
+    ImageComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     FormsModule,
     HammerModule,
     LyButtonModule,
