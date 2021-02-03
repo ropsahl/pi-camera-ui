@@ -16,3 +16,6 @@
     {{p.name}}
   </button>
 </section>
+<label>{{this.lastPicture?.image?.fileName || "utsikt.jpg"}}</label>
+<img src="http://192.168.86.175:8100/{{this.lastPicture?.image?.fileName || 'utsikt.jpg'}}" alt="Utsikt">
+

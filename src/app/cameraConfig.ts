@@ -16,4 +16,5 @@ export interface Image {
   width?: string;
   date?: string;
   rotation?: string;
+  fileName?: string;
 }

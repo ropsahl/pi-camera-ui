@@ -3,7 +3,6 @@ import {LyTheme2} from '@alyle/ui';
 import {ConfigService} from '../config.service';
 import {ParameterName} from '../parameterNames';
 import {CameraConfig} from '../cameraConfig';
-import {AppComponent} from "../app.component";
 
 const STYLES = ({
   slider: {
@@ -23,6 +22,8 @@ export class ConfigEditorComponent implements OnInit {
   readonly classes = this.theme.addStyleSheet(STYLES);
 
   pNames: ParameterName[] = [{name: 'en'}, {name: 'to'}];
+
+  lastPicture: CameraConfig = {};
 
   constructor(private theme: LyTheme2,
               private configService: ConfigService) {
@@ -47,7 +48,9 @@ export class ConfigEditorComponent implements OnInit {
   }
 
   getNewPicture(): void {
-    this.configService.newPicture().subscribe(config => AppComponent.cameraConfig = config);
+    this.configService.newPicture()
+      .subscribe(
+        config => this.lastPicture = config);
   }
 
 }
