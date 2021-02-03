@@ -2,6 +2,8 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {LyTheme2} from '@alyle/ui';
 import {ConfigService} from '../config.service';
 import {ParameterName} from '../parameterNames';
+import {CameraConfig} from '../cameraConfig';
+import {AppComponent} from "../app.component";
 
 const STYLES = ({
   slider: {
@@ -27,7 +29,6 @@ export class ConfigEditorComponent implements OnInit {
     this.getParameters();
   }
 
-  hero = 'Windstorm';
 
   ngOnInit(): void {
     this.getParameters();
@@ -37,7 +38,6 @@ export class ConfigEditorComponent implements OnInit {
     this.configService.getParameterNames()
       .subscribe(names =>
         this.pNames = names);
-    this.getNewPicture();
   }
 
   getParameter(parameter: string): void {
@@ -45,8 +45,9 @@ export class ConfigEditorComponent implements OnInit {
       .subscribe(values =>
         this.pNames = values);
   }
+
   getNewPicture(): void {
-    this.configService.newPicture();
+    this.configService.newPicture().subscribe(config => AppComponent.cameraConfig = config);
   }
 
 }

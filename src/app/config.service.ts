@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import {catchError, map} from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {ParameterName} from './parameterNames';
-
+import {CameraConfig} from './cameraConfig';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class ConfigService {
 
   private configServerUrl = 'http://192.168.86.175:8100/camera_config/config';
 
-  private image = 'http://192.168.86.175:8100/camera_config/camera/';
+  private image = 'http://192.168.86.175:8100/camera_config/camera';
 
   constructor(private http: HttpClient) {
   }
@@ -21,25 +21,25 @@ export class ConfigService {
   parameterName: ParameterName = {
     name: 'meter',
   };
-  parameterNames: ParameterName[] = [{name: 'meter'}, {name: 'flash'}];
 
-  newPicture(): void {
-    this.http.post(this.image, '  "config": {\n' +
-      '    "contrast": 50,\n' +
-      '    "brightness": 50,\n' +
-      '    "effects": "none",\n' +
-      '    "exposuremode": ""\n' +
-      '  },\n' +
-      '  "image": {\n' +
-      '    "size": {\n' +
-      '      "height": 1024,\n' +
-      '      "width": 768\n' +
-      '    }\n' +
-      '  }');
+  parameterNames: ParameterName[] = [{name: 'meter'}, {name: 'flash'}];
+  cameraConfig: CameraConfig = {config: {brightness: 50}};
+  tmp: CameraConfig = {config: {brightness: 50}};
+  newPicture(): Observable<CameraConfig> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    const config = this.http.post<CameraConfig>(this.image, this.cameraConfig, httpOptions);
+    return config.pipe(
+      catchError(this.handleError('newPicture'))
+    );
   }
 
   getParameterNames(): Observable<ParameterName[]> {
-    const names = this.http.get<string[]>(this.configServerUrl + '/names');
+
+    const names = this.http.get<string[]>(this.configServerUrl + '/names', {responseType: 'json'});
     return names.pipe(
       map(r =>
         r.map(v =>
@@ -61,5 +61,12 @@ export class ConfigService {
         )
       )
     );
+  }
+
+  private handleError(methodName: string): any {
+    return function (p1: any, p2: Observable<string[]>): any {
+      console.log('Error' + methodName + p1.error);
+      return undefined;
+    };
   }
 }

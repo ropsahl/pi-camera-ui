@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
-import { ThemeVariables, ThemeRef, lyl, StyleRenderer } from '@alyle/ui';
+import {lyl, StyleRenderer, ThemeRef, ThemeVariables} from '@alyle/ui';
+import {CameraConfig} from './cameraConfig';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
   return {
-    $global: lyl `{
+    $global: lyl`{
       body {
         background-color: ${theme.background.default}
         color: ${theme.text.default}
@@ -13,7 +14,7 @@ const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
         direction: ${theme.direction}
       }
     }`,
-    root: lyl `{
+    root: lyl`{
       display: block
     }`
   };
@@ -26,12 +27,12 @@ const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   providers: [StyleRenderer],
 })
 export class AppComponent {
+  static cameraConfig: CameraConfig = {image: {date: 'missing'}};
   readonly classes = this.sRenderer.renderSheet(STYLES, true);
 
 
   title = 'PI Camera';
 
-  constructor(readonly sRenderer: StyleRenderer) { }
-
-
+  constructor(readonly sRenderer: StyleRenderer) {
+  }
 }

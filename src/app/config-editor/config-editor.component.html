@@ -1,11 +1,15 @@
 <div [lyP]="1">
-  {{hero}}
 </div>
 <div [lyP]="1">
   <button ly-button raised (click)="getParameters()">
-    Update
+    Parameters
   </button>
   <ly-slider [ngClass]="classes.slider" [min]="28" [max]="234" [value]="76" [color]="'primary'"></ly-slider>
+</div>
+<div [lyP]="1">
+  <button ly-button raised (click)="getNewPicture()">
+    New picture
+  </button>
 </div>
 <section>
   <button *ngFor="let p of pNames" ly-button raised (click)="getParameter(p.name)">
