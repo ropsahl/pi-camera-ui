@@ -15,7 +15,7 @@ const STYLES = ({
   selector: 'app-config-editor',
   templateUrl: './config-editor.component.html',
   styleUrls: ['./config-editor.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 
 })
 export class ConfigEditorComponent implements OnInit {
@@ -25,14 +25,22 @@ export class ConfigEditorComponent implements OnInit {
 
   lastPicture: CameraConfig = {};
 
+  configuration: CameraConfig = {};
+
   constructor(private theme: LyTheme2,
               private configService: ConfigService) {
-    this.getParameters();
   }
 
 
   ngOnInit(): void {
+    this.getConfiguration();
     this.getParameters();
+  }
+
+  getConfiguration(): void {
+    this.configService.getConfiguration()
+      .subscribe(config =>
+        this.configuration = config);
   }
 
   getParameters(): void {

@@ -25,6 +25,7 @@ export class ConfigService {
   parameterNames: ParameterName[] = [{name: 'meter'}, {name: 'flash'}];
   cameraConfig: CameraConfig = {config: {brightness: 50}};
   tmp: CameraConfig = {config: {brightness: 50}};
+
   newPicture(): Observable<CameraConfig> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -37,8 +38,14 @@ export class ConfigService {
     );
   }
 
-  getParameterNames(): Observable<ParameterName[]> {
+  getConfiguration(): Observable<CameraConfig> {
+    const names = this.http.get<string[]>(this.configServerUrl + '/current', {responseType: 'json'});
+    return names.pipe(
+      catchError(this.handleError('getConfiguration'))
+    );
+  }
 
+  getParameterNames(): Observable<ParameterName[]> {
     const names = this.http.get<string[]>(this.configServerUrl + '/names', {responseType: 'json'});
     return names.pipe(
       map(r =>
@@ -46,7 +53,8 @@ export class ConfigService {
           ({name: v}
           )
         )
-      )
+      ),
+      catchError(this.handleError('getParameterNames'))
     );
   }
 
@@ -59,7 +67,8 @@ export class ConfigService {
           ({name: v}
           )
         )
-      )
+      ),
+      catchError(this.handleError('getParameterNames'))
     );
   }
 
