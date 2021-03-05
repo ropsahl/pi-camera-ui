@@ -1,11 +1,36 @@
 <div [lyP]="1">
-</div>
-<div [lyP]="1">
   <button ly-button raised (click)="getParameters()">
     Parameters
   </button>
-  <ly-slider [ngClass]="classes.slider" [min]="28" [max]="234" [value]="76" [color]="'primary'"></ly-slider>
 </div>
+<ly-grid container [spacing]="16" [lyP]="1">
+  <ly-grid item col="2 6@XSmall@Small">
+    <ly-field appearance="outlined" [lyWidth]="1" >
+      <ly-label>Rotasjon: {{rotation}}</ly-label>
+      <ly-slider [lyWidth]="1"
+                 [min]="0"
+                 [max]="360"
+                 [step]="5"
+                 [marks]="true"
+                 [color]="'primary'"
+                 [(ngModel)]="rotation"
+      >
+        <ly-mark *ngFor="let v of [0,45,90,135,180,225,270,315]" [value]="v">{{v}}</ly-mark>
+      </ly-slider>
+    </ly-field>
+  </ly-grid>
+  <ly-grid item col="2 6@XSmall@Small">
+    <ly-field appearance="outlined" [lyWidth]="1">
+      <input lyNativeControl
+             type="string"
+             value="1024/1068"
+      >
+      <span lySuffix>px</span>
+      <ly-label>Bredde/høyde</ly-label>
+      <ly-hint>Hint</ly-hint>
+    </ly-field>
+  </ly-grid>
+</ly-grid>
 <div [lyP]="1">
   <button ly-button raised (click)="getNewPicture()">
     New picture
@@ -18,7 +43,7 @@
 </section>
 <section>
   <h3>{{this.lastPicture?.image?.fileName || "utsikt.jpg"}}</h3>
-  <img src="http://192.168.86.175:8100/{{this.lastPicture?.image?.fileName || 'utsikt.jpg'}}" alt="Utsikt">
+  <img src="/{{this.lastPicture?.image?.fileName || 'utsikt.jpg'}}" alt="Utsikt">
   <p>{{this.configuration || ""}}</p>
 </section>
 

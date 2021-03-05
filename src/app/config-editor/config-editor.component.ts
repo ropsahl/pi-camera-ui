@@ -25,7 +25,9 @@ export class ConfigEditorComponent implements OnInit {
 
   lastPicture: CameraConfig = {};
 
-  configuration: CameraConfig = {};
+  configuration: CameraConfig = {image: {rotation: '0'}};
+
+  rotation = '0';
 
   constructor(private theme: LyTheme2,
               private configService: ConfigService) {
@@ -56,9 +58,11 @@ export class ConfigEditorComponent implements OnInit {
   }
 
   getNewPicture(): void {
-    this.configService.newPicture()
+    if (this.configuration.image) {
+      this.configuration.image.rotation = this.rotation;
+    }
+    this.configService.newPicture(this.configuration)
       .subscribe(
         config => this.lastPicture = config);
   }
-
 }

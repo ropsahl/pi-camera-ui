@@ -11,9 +11,8 @@ import {CameraConfig} from './cameraConfig';
 })
 export class ConfigService {
 
-  private configServerUrl = 'http://192.168.86.175:8100/camera_config/config';
-
-  private image = 'http://192.168.86.175:8100/camera_config/camera';
+  private configServerUrl = '/camera_config/config';
+  private image = '/camera_config/camera';
 
   constructor(private http: HttpClient) {
   }
@@ -26,13 +25,13 @@ export class ConfigService {
   cameraConfig: CameraConfig = {config: {brightness: 50}};
   tmp: CameraConfig = {config: {brightness: 50}};
 
-  newPicture(): Observable<CameraConfig> {
+  newPicture(configuration: CameraConfig): Observable<CameraConfig> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
-    const config = this.http.post<CameraConfig>(this.image, this.cameraConfig, httpOptions);
+    const config = this.http.post<CameraConfig>(this.image, configuration, httpOptions);
     return config.pipe(
       catchError(this.handleError('newPicture'))
     );
@@ -72,10 +71,12 @@ export class ConfigService {
     );
   }
 
+
   private handleError(methodName: string): any {
     return function (p1: any, p2: Observable<string[]>): any {
       console.log('Error' + methodName + p1.error);
       return undefined;
     };
   }
+
 }

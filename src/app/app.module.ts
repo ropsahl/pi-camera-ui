@@ -12,6 +12,8 @@ import {MinimaLight} from '@alyle/ui/themes/minima';
 import {LyButtonModule} from '@alyle/ui/button';
 import {LySliderModule} from '@alyle/ui/slider';
 import { ImageComponent } from './image/image.component';
+import {LyFieldModule} from '@alyle/ui/field';
+import { LyGridModule } from '@alyle/ui/grid';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { ImageComponent } from './image/image.component';
     HammerModule,
     LyButtonModule,
     LySliderModule,
+    LyFieldModule,
+    LyGridModule,
   ],
   providers: [StyleRenderer, LyTheme2, {provide: LY_THEME_NAME, useValue: 'minima-light'},
     {provide: LY_THEME, useClass: MinimaLight, multi: true},

@@ -1,0 +1,10 @@
+{
+  "/camera_config/*": {
+    "target": "http://localhost:8200",
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/camera_config": ""
+    }
+  }
+}
