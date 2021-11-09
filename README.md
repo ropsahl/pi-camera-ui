@@ -1,4 +1,12 @@
+Powershell:
+npm install -g @angular/cli
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
+ng test An unhandled exception occurred: Cannot find module '@angular-devkit/build-angular/package.json'
+
+
 # PiCameraUi
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.2.
 
